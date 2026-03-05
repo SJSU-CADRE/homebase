@@ -7,7 +7,11 @@ const ASCII_LOGO = `
  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\____-  \\ \\_\\ \\_\\  \\ \\_____\\
   \\/_____/   \\/_/\\/_/   \\/____/   \\/_/ /_/   \\/_____/ `
 
-export default function Header({ theme, toggleTheme, isLoggedIn }) {
+export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick }) {
+  const navAction = isLoggedIn
+    ? <Link to="/dashboard">dashboard</Link>
+    : <button type="button" className="nav-btn" onClick={onLoginClick}>login</button>
+
   return (
     <>
       {/* Desktop header */}
@@ -21,13 +25,7 @@ export default function Header({ theme, toggleTheme, isLoggedIn }) {
             Ǝᴚᗡ∀Ↄ
           </a>
         </div>
-        <nav className="nav-top">
-          {isLoggedIn ? (
-            <Link to="/dashboard">dashboard</Link>
-          ) : (
-            <Link to="/login">login</Link>
-          )}
-        </nav>
+        <nav className="nav-top">{navAction}</nav>
       </header>
 
       {/* Mobile header */}
@@ -50,11 +48,7 @@ export default function Header({ theme, toggleTheme, isLoggedIn }) {
           >
             {theme === 'light' ? '☀' : '☾'}
           </button>
-          {isLoggedIn ? (
-            <Link to="/dashboard">dashboard</Link>
-          ) : (
-            <Link to="/login">login</Link>
-          )}
+          {navAction}
         </nav>
       </header>
     </>

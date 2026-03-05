@@ -13,6 +13,11 @@ export default function Sidebar({ theme, toggleTheme }) {
         {theme === 'light' ? '☀' : '☾'}
       </button>
       <div className="vertical">homebase</div>
+      <div className="sidebar-social">
+        <a href="https://www.facebook.com/sjsucadre" target="_blank" rel="noopener" className="vertical">fb</a>
+        <a href="https://twitter.com/cadre_sjsu" target="_blank" rel="noopener" className="vertical">tw</a>
+        <a href="https://www.instagram.com/cadre_sjsu/" target="_blank" rel="noopener" className="vertical">ig</a>
+      </div>
     </aside>
   )
 }
