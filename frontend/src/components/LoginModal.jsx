@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
+import { useOktaAuth } from '@okta/okta-react'
 
 export default function LoginModal({ onClose }) {
+  const { oktaAuth } = useOktaAuth()
   // Close on Escape key
   useEffect(() => {
     function onKey(e) { if (e.key === 'Escape') onClose() }
@@ -22,7 +24,7 @@ export default function LoginModal({ onClose }) {
         <p>Sign in with your SJSU account to access Homebase.</p>
         <button
           className="modal-btn"
-          onClick={() => alert('Okta SSO coming soon — add SJSU Okta credentials to .env')}
+          onClick={() => oktaAuth.signInWithRedirect()}
         >
           sign in with SJSU / Okta →
         </button>

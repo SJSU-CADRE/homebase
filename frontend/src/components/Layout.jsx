@@ -1,12 +1,15 @@
 import { useState } from 'react'
+import { useOktaAuth } from '@okta/okta-react'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import Footer from './Footer'
 import PageTransition from './PageTransition'
 import LoginModal from './LoginModal'
 
-export default function Layout({ theme, toggleTheme, isLoggedIn }) {
+export default function Layout({ theme, toggleTheme }) {
   const [loginOpen, setLoginOpen] = useState(false)
+  const { authState } = useOktaAuth()
+  const isLoggedIn = authState?.isAuthenticated ?? false
 
   return (
     <div className="page">
