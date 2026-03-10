@@ -1,5 +1,6 @@
 // Dashboard: Reddit-style channel board (to be built out)
 
+
 export default function DashboardPage() {
   return (
     <div className="columns">
