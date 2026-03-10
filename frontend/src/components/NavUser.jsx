@@ -3,7 +3,9 @@ import { useOktaAuth } from '@okta/okta-react'
 
 export default function NavUser({ isLoggedIn, onLoginClick, onLogoutClick }) {
   const { authState } = useOktaAuth()
-  const firstName = authState?.idToken?.claims?.given_name ?? ''
+  const claims = authState?.idToken?.claims
+  console.log('Okta ID token claims:', claims)
+  const firstName = claims?.given_name ?? ''
 
   if (isLoggedIn) {
     return (
