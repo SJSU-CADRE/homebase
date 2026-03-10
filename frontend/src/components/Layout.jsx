@@ -8,7 +8,7 @@ import LoginModal from './LoginModal'
 
 export default function Layout({ theme, toggleTheme }) {
   const [loginOpen, setLoginOpen] = useState(false)
-  const { authState } = useOktaAuth()
+  const { authState, oktaAuth } = useOktaAuth()
   const isLoggedIn = authState?.isAuthenticated ?? false
 
   return (
@@ -20,6 +20,7 @@ export default function Layout({ theme, toggleTheme }) {
           toggleTheme={toggleTheme}
           isLoggedIn={isLoggedIn}
           onLoginClick={() => setLoginOpen(true)}
+          onLogoutClick={() => oktaAuth.signOut()}
         />
         <main className="main">
           <PageTransition />

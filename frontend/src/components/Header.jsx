@@ -7,9 +7,12 @@ const ASCII_LOGO = `
  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\____-  \\ \\_\\ \\_\\  \\ \\_____\\
   \\/_____/   \\/_/\\/_/   \\/____/   \\/_/ /_/   \\/_____/ `
 
-export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick }) {
+export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick, onLogoutClick }) {
   const navAction = isLoggedIn
-    ? <Link to="/dashboard">dashboard</Link>
+    ? <>
+        <Link to="/dashboard">dashboard</Link>
+        <button type="button" className="nav-btn" onClick={onLogoutClick}>logout</button>
+      </>
     : <button type="button" className="nav-btn" onClick={onLoginClick}>login</button>
 
   return (
