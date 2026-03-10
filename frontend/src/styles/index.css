@@ -4,8 +4,9 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 .page-transition {
-  display: contents;
-  animation: pageFade 0.2s ease;
+  display: block;
+  width: 100%;
+  animation: pageFade 0.35s ease-out;
 }
 
 /* Modal */

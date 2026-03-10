@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import NavUser from './NavUser'
 
 const ASCII_LOGO = `
  ______     ______     _____     ______     ______
@@ -8,13 +9,6 @@ const ASCII_LOGO = `
   \\/_____/   \\/_/\\/_/   \\/____/   \\/_/ /_/   \\/_____/ `
 
 export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick, onLogoutClick }) {
-  const navAction = isLoggedIn
-    ? <>
-        <Link to="/dashboard">dashboard</Link>
-        <button type="button" className="nav-btn" onClick={onLogoutClick}>logout</button>
-      </>
-    : <button type="button" className="nav-btn" onClick={onLoginClick}>login</button>
-
   return (
     <>
       {/* Desktop header */}
@@ -28,7 +22,9 @@ export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick, o
             Ǝᴚᗡ∀Ↄ
           </a>
         </div>
-        <nav className="nav-top">{navAction}</nav>
+        <nav className="nav-top">
+          <NavUser isLoggedIn={isLoggedIn} onLoginClick={onLoginClick} onLogoutClick={onLogoutClick} />
+        </nav>
       </header>
 
       {/* Mobile header */}
@@ -51,7 +47,7 @@ export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick, o
           >
             {theme === 'light' ? '☀' : '☾'}
           </button>
-          {navAction}
+          <NavUser isLoggedIn={isLoggedIn} onLoginClick={onLoginClick} onLogoutClick={onLogoutClick} />
         </nav>
       </header>
     </>
