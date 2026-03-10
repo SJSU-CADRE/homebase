@@ -236,6 +236,7 @@ a:hover { color: var(--hover); text-decoration: underline; }
   transition: color var(--theme-duration) var(--theme-ease);
 }
 .nav-top .theme-toggle:hover { color: var(--fg); }
+.nav-username { color: var(--dim); transition: color var(--theme-duration) var(--theme-ease); }
 
 /* ----- main layout: sidebar + two columns ----- */
 .main {

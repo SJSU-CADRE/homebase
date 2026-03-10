@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom'
+import { useOktaAuth } from '@okta/okta-react'
 
 export default function NavUser({ isLoggedIn, onLoginClick, onLogoutClick }) {
+  const { authState } = useOktaAuth()
+  const firstName = authState?.idToken?.claims?.given_name ?? ''
+
   if (isLoggedIn) {
     return (
       <>
+        {firstName && <span className="nav-username">{firstName}</span>}
         <Link to="/dashboard">dashboard</Link>
         <button type="button" className="nav-btn" onClick={onLogoutClick}>logout</button>
       </>
