@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import channelRoutes from './routes/channels.js'
 import postRoutes from './routes/posts.js'
 import userRoutes from './routes/users.js'
+import { runSeed } from './seed.js'
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -21,8 +22,9 @@ app.use('/api/users', userRoutes)
 app.get('/api/health', (_, res) => res.json({ status: 'ok' }))
 
 mongoose.connect(MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log('Connected to MongoDB')
+    await runSeed()
     app.listen(PORT, () => console.log(`Backend running on port ${PORT}`))
   })
   .catch(err => {

@@ -1,13 +1,21 @@
 import { Router } from 'express'
 import Post from '../models/Post.js'
+import Channel from '../models/Channel.js'
 import User from '../models/User.js'
 import { requireAuth } from '../middleware/auth.js'
 
 const router = Router()
 
-// GET /api/posts?channel=:channelId
+// GET /api/posts?channel=:channelId&channelName=:name&featured=true
 router.get('/', async (req, res) => {
-  const filter = req.query.channel ? { channel: req.query.channel } : {}
+  const filter = {}
+  if (req.query.channel) filter.channel = req.query.channel
+  if (req.query.featured === 'true') filter.featured = true
+  if (req.query.channelName) {
+    const channel = await Channel.findOne({ name: req.query.channelName })
+    if (!channel) return res.json([])
+    filter.channel = channel._id
+  }
   const posts = await Post.find(filter)
     .populate('author', 'name email')
     .sort({ createdAt: -1 })
