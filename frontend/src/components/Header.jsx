@@ -23,6 +23,7 @@ export default function Header({ theme, toggleTheme, isLoggedIn, onLoginClick, o
           </a>
         </div>
         <nav className="nav-top">
+          <Link to="/frontpage-edit" className="nav-link">frontpage edit</Link>
           <NavUser isLoggedIn={isLoggedIn} onLoginClick={onLoginClick} onLogoutClick={onLogoutClick} />
         </nav>
       </header>

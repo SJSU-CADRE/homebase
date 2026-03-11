@@ -5,6 +5,7 @@ import { Security, LoginCallback } from '@okta/okta-react'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import DashboardPage from './pages/DashboardPage'
+import FrontPageEditPage from './pages/FrontPageEditPage'
 
 const THEME_KEY = 'cadre-homebase-theme'
 
@@ -40,6 +41,7 @@ function AppWithSecurity() {
         <Route element={<Layout theme={theme} toggleTheme={toggleTheme} />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/frontpage-edit" element={<FrontPageEditPage />} />
         </Route>
         <Route path="/login/callback" element={<LoginCallback />} />
       </Routes>

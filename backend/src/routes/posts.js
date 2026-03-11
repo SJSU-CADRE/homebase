@@ -23,11 +23,40 @@ router.get('/', async (req, res) => {
 })
 
 // POST /api/posts — create a post (auth required)
+// Accepts channelName in body to resolve channel automatically
 router.post('/', requireAuth, async (req, res) => {
   try {
     const user = await User.findOne({ oktaId: req.user.id })
-    const post = await Post.create({ ...req.body, author: user._id })
+    const { channelName, ...rest } = req.body
+    if (channelName && !rest.channel) {
+      const channel = await Channel.findOne({ name: channelName })
+      if (!channel) return res.status(404).json({ error: 'Channel not found' })
+      rest.channel = channel._id
+    }
+    const post = await Post.create({ ...rest, author: user._id })
     res.status(201).json(post)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+// PUT /api/posts/:id — update a post (auth required)
+router.put('/:id', requireAuth, async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    if (!post) return res.status(404).json({ error: 'Post not found' })
+    res.json(post)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+})
+
+// DELETE /api/posts/:id — delete a post (auth required)
+router.delete('/:id', requireAuth, async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.id)
+    if (!post) return res.status(404).json({ error: 'Post not found' })
+    res.json({ success: true })
   } catch (err) {
     res.status(400).json({ error: err.message })
   }
