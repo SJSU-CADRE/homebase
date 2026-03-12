@@ -1,6 +1,11 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - VITE_OKTA_ISSUER=${VITE_OKTA_ISSUER}
+        - VITE_OKTA_CLIENT_ID=${VITE_OKTA_CLIENT_ID}
+        - VITE_OKTA_REDIRECT_URI=${VITE_OKTA_REDIRECT_URI}
     ports:
       - "3000:80"
     depends_on:

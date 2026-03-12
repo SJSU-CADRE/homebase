@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function Sidebar({ theme, toggleTheme }) {
+export default function Sidebar({ theme, toggleTheme, canEditFrontpage }) {
   return (
     <aside className="sidebar">
       <Link to="/" className="home" aria-label="Home">⌂</Link>
@@ -13,6 +13,7 @@ export default function Sidebar({ theme, toggleTheme }) {
         {theme === 'light' ? '☀' : '☾'}
       </button>
       <div className="vertical">homebase</div>
+      {canEditFrontpage && <Link to="/frontpage-edit" className="vertical">edit frontpage</Link>}
       <div className="sidebar-social">
         <a href="https://www.facebook.com/sjsucadre" target="_blank" rel="noopener" className="vertical">fb</a>
         <a href="https://twitter.com/cadre_sjsu" target="_blank" rel="noopener" className="vertical">tw</a>

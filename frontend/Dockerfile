@@ -3,6 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ARG VITE_OKTA_ISSUER
+ARG VITE_OKTA_CLIENT_ID
+ARG VITE_OKTA_REDIRECT_URI
 RUN npm run build
 
 FROM nginx:1.26-alpine
