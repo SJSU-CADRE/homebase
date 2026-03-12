@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js'
 import { Security, LoginCallback, useOktaAuth } from '@okta/okta-react'
 import Layout from './components/Layout'
@@ -16,10 +16,10 @@ const oktaAuth = new OktaAuth({
   pkce: true,
 })
 
-function RequireAuth({ children }) {
+function RequireAuth() {
   const { authState } = useOktaAuth()
   if (!authState) return null
-  return authState.isAuthenticated ? children : <Navigate to="/" replace />
+  return authState.isAuthenticated ? <Outlet /> : <Navigate to="/" replace />
 }
 
 function AppWithSecurity() {
@@ -46,8 +46,10 @@ function AppWithSecurity() {
       <Routes>
         <Route element={<Layout theme={theme} toggleTheme={toggleTheme} />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/frontpage-edit" element={<RequireAuth><FrontPageEditPage /></RequireAuth>} />
+          <Route element={<RequireAuth />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/frontpage-edit" element={<FrontPageEditPage />} />
+          </Route>
         </Route>
         <Route path="/login/callback" element={<LoginCallback />} />
       </Routes>
