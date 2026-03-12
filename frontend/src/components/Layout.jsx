@@ -15,8 +15,15 @@ export default function Layout({ theme, toggleTheme }) {
   useEffect(() => {
     if (!isLoggedIn) { setCanEditFrontpage(false); return }
     const token = authState?.accessToken?.accessToken
+    const claims = authState?.idToken?.claims
     if (!token) return
-    fetch('/api/users/me', { headers: { Authorization: `Bearer ${token}` } })
+    const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+    fetch('/api/users/sync', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ name: claims?.name ?? '' }),
+    })
+      .then(() => fetch('/api/users/me', { headers }))
       .then(r => r.json())
       .then(user => setCanEditFrontpage(user.role === 'cadre' || user.role === 'admin'))
       .catch(() => setCanEditFrontpage(false))
