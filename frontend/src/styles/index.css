@@ -610,6 +610,22 @@ a:hover { color: var(--hover); text-decoration: underline; }
 }
 .footer a { color: var(--dim); }
 .footer a, .footer .binary-name { transition: color var(--theme-duration) var(--theme-ease); }
+
+/* ----- form controls ----- */
+input, textarea, select {
+  background: rgb(245, 245, 245);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  transition: border-color var(--theme-duration) var(--theme-ease), background-color var(--theme-duration) var(--theme-ease);
+}
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #1a1a1a;
+}
 .footer .binary-name {
   font-size: 10px;
   color: var(--dim);

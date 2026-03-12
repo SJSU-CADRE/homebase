@@ -192,7 +192,7 @@ export default function FrontPageEditPage() {
           ))}
         </div>
 
-        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', width: '100%' }}>
+        <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', width: '100%', maxWidth: '700px' }}>
           <label style={{ fontSize: '12px' }}>
             title
             <input
