@@ -453,6 +453,14 @@ a:hover { color: var(--hover); text-decoration: underline; }
   padding-top: 0;
 }
 
+/* ----- compact: square image on top, text below ----- */
+.news-item--compact .news-image {
+  aspect-ratio: 1 / 1;
+}
+.news-item--compact .news-body {
+  padding: 16px 20px;
+}
+
 /* ----- banner (default): full-width image on top, shorter height ----- */
 .news-item--banner .news-image {
   aspect-ratio: 600 / 160;
