@@ -12,7 +12,8 @@ const EMPTY_FORM = {
 
 const LAYOUT_OPTIONS = [
   { value: 'compact', label: 'compact' },
-  { value: 'image-left', label: 'standard' },
+  { value: 'image-left', label: 'image left' },
+  { value: 'image-right', label: 'image right' },
   { value: 'banner', label: 'banner' },
 ]
 
@@ -38,6 +39,19 @@ function LayoutThumb({ value }) {
         <rect x="43" y="20" width="40" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
         <rect x="43" y="26" width="46" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
         <rect x="43" y="32" width="30" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
+      </svg>
+    )
+  }
+  if (value === 'image-right') {
+    return (
+      <svg viewBox="0 0 100 50" width="100" height="50" style={{ display: 'block' }}>
+        <rect x="0.5" y="0.5" width="99" height="49" fill="var(--bg)" stroke="var(--border)" strokeWidth="1"/>
+        <rect x="63" y="1" width="36" height="48" fill="var(--dim)" opacity="0.25"/>
+        <line x1="63" y1="0" x2="63" y2="50" stroke="var(--border)" strokeWidth="1"/>
+        <rect x="7" y="12" width="50" height="3" fill="var(--dim)" opacity="0.5" rx="1"/>
+        <rect x="7" y="20" width="40" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
+        <rect x="7" y="26" width="46" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
+        <rect x="7" y="32" width="30" height="2" fill="var(--dim)" opacity="0.3" rx="1"/>
       </svg>
     )
   }
