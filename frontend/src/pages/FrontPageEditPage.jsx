@@ -157,7 +157,7 @@ export default function FrontPageEditPage() {
           ref={previewRef}
           style={{
             width: '90%',
-            height: `${680 * previewScale}px`,
+            height: `${750 * previewScale}px`,
             overflow: 'hidden',
             border: '1px solid var(--border)',
             borderRadius: '4px',
@@ -168,7 +168,7 @@ export default function FrontPageEditPage() {
             title="Front page preview"
             style={{
               width: '1200px',
-              height: '680px',
+              height: '750px',
               border: 'none',
               transform: `scale(${previewScale})`,
               transformOrigin: 'top left',
@@ -179,12 +179,12 @@ export default function FrontPageEditPage() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
           {posts.map(post => (
-            <div key={post._id} style={{ borderTop: '1px solid var(--border)', paddingTop: '10px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 600 }}>{post.title}</div>
-              <div style={{ fontSize: '11px', color: 'var(--dim)', marginBottom: '6px' }}>
-                {post.category} · {post.variant}
+            <div key={post._id} style={{ borderTop: '1px solid var(--border)', paddingTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: '13px', fontWeight: 600 }}>{post.title}</div>
+                <div style={{ fontSize: '11px', color: 'var(--dim)' }}>{post.category} · {post.variant}</div>
               </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
                 <button className="btn" onClick={() => startEdit(post)}>edit</button>
                 <button className="btn" onClick={() => handleDelete(post._id)}>delete</button>
               </div>

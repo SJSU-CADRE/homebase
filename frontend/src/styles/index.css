@@ -73,6 +73,7 @@
   --dim: #cbcbcb;
   --border: #333;
   --hover: #fff;
+  --btn-bg: #1a1a1a;
   --footer-bg: rgba(10, 10, 10, 0.10);
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --theme-duration: 0.35s;
@@ -87,6 +88,7 @@ html[data-theme="light"] {
   --dim: #555;
   --border: #ccc;
   --hover: #000;
+  --btn-bg: #e2e2e2;
   --footer-bg: rgba(245, 245, 245, 0.10);
   --modal-backdrop: rgba(255, 255, 255, 0.25);
 }
@@ -610,6 +612,22 @@ a:hover { color: var(--hover); text-decoration: underline; }
 }
 .footer a { color: var(--dim); }
 .footer a, .footer .binary-name { transition: color var(--theme-duration) var(--theme-ease); }
+
+/* ----- generic button ----- */
+.btn {
+  background: var(--btn-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color var(--theme-duration) var(--theme-ease),
+              background-color var(--theme-duration) var(--theme-ease),
+              color var(--theme-duration) var(--theme-ease);
+}
+.btn:hover { border-color: var(--fg); }
+.btn:disabled { opacity: 0.4; cursor: default; }
 
 /* ----- form controls ----- */
 input, textarea, select {
