@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
   body:      { type: String, default: '' },
   image:     { type: String, default: '' },
   category:  { type: String, default: 'News' },
-  variant:   { type: String, enum: ['banner', 'image-left', 'image-right', 'text'], default: 'text' },
+  variant:   { type: String, enum: ['banner', 'image-left', 'image-right', 'compact', 'text'], default: 'text' },
   featured:  { type: Boolean, default: false },
   comments:  [commentSchema],
   createdAt: { type: Date, default: Date.now },
