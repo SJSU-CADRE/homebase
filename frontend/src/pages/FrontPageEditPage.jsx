@@ -156,7 +156,7 @@ export default function FrontPageEditPage() {
         <div
           ref={previewRef}
           style={{
-            width: '90%',
+            width: '100%',
             height: `${750 * previewScale}px`,
             overflow: 'hidden',
             border: '1px solid var(--border)',
