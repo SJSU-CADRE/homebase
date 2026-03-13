@@ -2,22 +2,28 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import channelRoutes from './routes/channels.js'
 import postRoutes from './routes/posts.js'
 import userRoutes from './routes/users.js'
+import uploadRoutes from './routes/upload.js'
 import { runSeed } from './seed.js'
 
 const app = express()
 const PORT = process.env.PORT || 4000
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://mongodb:27017/homebase'
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }))
 app.use(express.json())
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 // Routes
 app.use('/api/channels', channelRoutes)
 app.use('/api/posts', postRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/upload', uploadRoutes)
 
 app.get('/api/health', (_, res) => res.json({ status: 'ok' }))
 

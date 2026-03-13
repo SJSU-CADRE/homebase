@@ -75,6 +75,8 @@ export default function FrontPageEditPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [pendingDeleteId, setPendingDeleteId] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
+  const [imageError, setImageError] = useState('')
   const previewRef = useRef(null)
   const iframeRef = useRef(null)
   const [previewScale, setPreviewScale] = useState(0.25)
@@ -113,12 +115,16 @@ export default function FrontPageEditPage() {
       variant: post.variant,
       featured: post.featured,
     })
+    setImageFile(null)
+    setImageError('')
     setError('')
   }
 
   function startNew() {
     setEditingId(null)
     setForm(EMPTY_FORM)
+    setImageFile(null)
+    setImageError('')
     setError('')
   }
 
@@ -131,9 +137,19 @@ export default function FrontPageEditPage() {
     setSaving(true)
     setError('')
     try {
+      let imageUrl = form.image
+      if (imageFile) {
+        const token = oktaAuth.getAccessToken()
+        const fd = new FormData()
+        fd.append('image', imageFile)
+        const upRes = await fetch('/api/upload', { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd })
+        if (!upRes.ok) throw new Error((await upRes.json()).error)
+        imageUrl = (await upRes.json()).url
+      }
+      const postData = { ...form, image: imageUrl }
       const url = editingId ? `/api/posts/${editingId}` : '/api/posts'
       const method = editingId ? 'PUT' : 'POST'
-      const body = editingId ? form : { ...form, channelName: 'announcements' }
+      const body = editingId ? postData : { ...postData, channelName: 'announcements' }
       const res = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(body) })
       if (!res.ok) throw new Error((await res.json()).error)
       loadPosts()
@@ -262,14 +278,35 @@ export default function FrontPageEditPage() {
               onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))}
             />
           </label>
-          <label style={{ fontSize: '12px' }}>
-            image url
-            <input
-              style={{ display: 'block', width: '100%', marginTop: '4px' }}
-              value={form.image}
-              onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
-            />
-          </label>
+          <div style={{ fontSize: '12px' }}>
+            image
+            <div style={{ marginTop: '4px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label className="btn" style={{ cursor: 'pointer', margin: 0 }}>
+                choose file
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                  onChange={e => {
+                    const file = e.target.files[0]
+                    if (!file) return
+                    if (file.size > 2 * 1024 * 1024) {
+                      setImageError('Image must be under 2 MB')
+                      setImageFile(null)
+                    } else {
+                      setImageError('')
+                      setImageFile(file)
+                    }
+                    e.target.value = ''
+                  }}
+                />
+              </label>
+              <span style={{ fontSize: '11px', color: 'var(--dim)' }}>
+                {imageFile ? `${imageFile.name} (${(imageFile.size / 1024).toFixed(0)} KB)` : form.image ? 'current image kept' : 'no image'}
+              </span>
+            </div>
+            {imageError && <div style={{ color: 'var(--accent, #e05)', fontSize: '11px', marginTop: '4px' }}>{imageError}</div>}
+          </div>
           <label style={{ fontSize: '12px' }}>
             category
             <select
