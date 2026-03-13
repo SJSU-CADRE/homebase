@@ -11,10 +11,10 @@ const EMPTY_FORM = {
 }
 
 const VARIANT_SIZES = {
-  compact: '800 × 800 px',
+  compact: '600 × 600 px',
   banner: '1200 × 320 px',
-  'image-left': '800 × 600 px',
-  'image-right': '800 × 600 px',
+  'image-left': '600 × 450 px',
+  'image-right': '600 × 450 px',
 }
 
 const LAYOUT_OPTIONS = [
