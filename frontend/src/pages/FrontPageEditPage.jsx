@@ -10,6 +10,13 @@ const EMPTY_FORM = {
   featured: true,
 }
 
+const VARIANT_SIZES = {
+  compact: '800 × 800 px',
+  banner: '1200 × 320 px',
+  'image-left': '800 × 600 px',
+  'image-right': '800 × 600 px',
+}
+
 const LAYOUT_OPTIONS = [
   { value: 'compact', label: 'compact' },
   { value: 'image-left', label: 'image left' },
@@ -279,7 +286,9 @@ export default function FrontPageEditPage() {
             />
           </label>
           <div style={{ fontSize: '12px' }}>
-            image
+            image{VARIANT_SIZES[form.variant] && (
+              <span style={{ color: 'var(--dim)', fontSize: '11px' }}> ({VARIANT_SIZES[form.variant]})</span>
+            )}
             <div style={{ marginTop: '4px', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <label className="btn" style={{ cursor: 'pointer', margin: 0 }}>
                 choose file
