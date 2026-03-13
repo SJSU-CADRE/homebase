@@ -74,6 +74,7 @@ export default function FrontPageEditPage() {
   const [editingId, setEditingId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [pendingDeleteId, setPendingDeleteId] = useState(null)
   const previewRef = useRef(null)
   const iframeRef = useRef(null)
   const [previewScale, setPreviewScale] = useState(0.25)
@@ -146,9 +147,9 @@ export default function FrontPageEditPage() {
   }
 
   async function handleDelete(id) {
-    if (!confirm('Delete this post?')) return
     try {
       await fetch(`/api/posts/${id}`, { method: 'DELETE', headers: authHeaders() })
+      setPendingDeleteId(null)
       loadPosts()
       if (editingId === id) startNew()
       reloadPreview()
@@ -193,8 +194,17 @@ export default function FrontPageEditPage() {
                 <div style={{ fontSize: '11px', color: 'var(--dim)' }}>{post.category} · {post.variant}</div>
               </div>
               <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
-                <button className="btn" onClick={() => startEdit(post)}>edit</button>
-                <button className="btn" onClick={() => handleDelete(post._id)}>delete</button>
+                {pendingDeleteId === post._id ? (
+                  <>
+                    <button className="btn" onClick={() => handleDelete(post._id)}>confirm</button>
+                    <button className="btn" onClick={() => setPendingDeleteId(null)}>cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button className="btn" onClick={() => startEdit(post)}>edit</button>
+                    <button className="btn" onClick={() => setPendingDeleteId(post._id)}>delete</button>
+                  </>
+                )}
               </div>
             </div>
           ))}
