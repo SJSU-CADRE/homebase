@@ -75,6 +75,7 @@ export default function FrontPageEditPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const previewRef = useRef(null)
+  const iframeRef = useRef(null)
   const [previewScale, setPreviewScale] = useState(0.25)
 
   function authHeaders() {
@@ -120,6 +121,10 @@ export default function FrontPageEditPage() {
     setError('')
   }
 
+  function reloadPreview() {
+    if (iframeRef.current) iframeRef.current.src = '/'
+  }
+
   async function handleSave(e) {
     e.preventDefault()
     setSaving(true)
@@ -132,6 +137,7 @@ export default function FrontPageEditPage() {
       if (!res.ok) throw new Error((await res.json()).error)
       loadPosts()
       startNew()
+      reloadPreview()
     } catch (err) {
       setError(err.message)
     } finally {
@@ -145,6 +151,7 @@ export default function FrontPageEditPage() {
       await fetch(`/api/posts/${id}`, { method: 'DELETE', headers: authHeaders() })
       loadPosts()
       if (editingId === id) startNew()
+      reloadPreview()
     } catch (err) {
       setError(err.message)
     }
@@ -164,6 +171,7 @@ export default function FrontPageEditPage() {
           }}
         >
           <iframe
+            ref={iframeRef}
             src="/"
             title="Front page preview"
             style={{
