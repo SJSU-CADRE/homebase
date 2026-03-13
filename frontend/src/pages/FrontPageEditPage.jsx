@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useOktaAuth } from '@okta/okta-react'
 
 const EMPTY_FORM = {
@@ -74,6 +74,8 @@ export default function FrontPageEditPage() {
   const [editingId, setEditingId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const previewRef = useRef(null)
+  const [previewScale, setPreviewScale] = useState(0.25)
 
   function authHeaders() {
     const token = oktaAuth.getAccessToken()
@@ -88,6 +90,16 @@ export default function FrontPageEditPage() {
   }
 
   useEffect(() => { loadPosts() }, [])
+
+  useEffect(() => {
+    const el = previewRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      setPreviewScale(entry.contentRect.width / 1200)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
 
   function startEdit(post) {
     setEditingId(post._id)
@@ -141,16 +153,16 @@ export default function FrontPageEditPage() {
   return (
     <div className="columns">
       <section className="left-col">
-        <h2>preview</h2>
-        <div style={{
-          width: '300px',
-          height: '170px',
-          overflow: 'hidden',
-          border: '1px solid var(--border)',
-          borderRadius: '4px',
-          marginTop: '16px',
-          flexShrink: 0,
-        }}>
+        <div
+          ref={previewRef}
+          style={{
+            width: '90%',
+            height: `${680 * previewScale}px`,
+            overflow: 'hidden',
+            border: '1px solid var(--border)',
+            borderRadius: '4px',
+          }}
+        >
           <iframe
             src="/"
             title="Front page preview"
@@ -158,7 +170,7 @@ export default function FrontPageEditPage() {
               width: '1200px',
               height: '680px',
               border: 'none',
-              transform: 'scale(0.25)',
+              transform: `scale(${previewScale})`,
               transformOrigin: 'top left',
               pointerEvents: 'none',
             }}
