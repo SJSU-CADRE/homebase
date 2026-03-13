@@ -141,22 +141,19 @@ export default function FrontPageEditPage() {
   return (
     <div className="columns">
       <section className="left-col">
-        <h2>front page posts</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
-          {posts.map(post => (
-            <div key={post._id} style={{ borderTop: '1px solid var(--border)', paddingTop: '10px' }}>
-              <div style={{ fontSize: '13px', fontWeight: 600 }}>{post.title}</div>
-              <div style={{ fontSize: '11px', color: 'var(--dim)', marginBottom: '6px' }}>
-                {post.category} · {post.variant}
-              </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button className="btn" onClick={() => startEdit(post)}>edit</button>
-                <button className="btn" onClick={() => handleDelete(post._id)}>delete</button>
-              </div>
-            </div>
-          ))}
-          <button className="btn" style={{ marginTop: '8px' }} onClick={startNew}>+ new post</button>
-        </div>
+        <h2>preview</h2>
+        <iframe
+          src="/"
+          title="Front page preview"
+          style={{
+            width: '100%',
+            height: '480px',
+            border: '1px solid var(--border)',
+            marginTop: '16px',
+            borderRadius: '4px',
+            background: 'var(--bg)',
+          }}
+        />
       </section>
 
       <section className="right-col" style={{ alignItems: 'flex-start' }}>

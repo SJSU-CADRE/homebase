@@ -18,7 +18,8 @@ const oktaAuth = new OktaAuth({
 
 function RequireAuth() {
   const { authState } = useOktaAuth()
-  if (!authState?.isAuthenticated) return <Navigate to="/" replace />
+  if (!authState) return null
+  if (!authState.isAuthenticated) return <Navigate to="/" replace />
   return <Outlet />
 }
 
